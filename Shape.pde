@@ -6,7 +6,7 @@ class Rect extends Shape {
   @Override
     void draw(float x, float y, float s, int col) {
     fill(col);
-    rect(x, y, s, s);
+    rect(x - s/2, y - s/2, s, s);
   }
 }
 
