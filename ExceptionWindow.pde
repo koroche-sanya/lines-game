@@ -31,7 +31,7 @@ class ExceptionWindow extends PApplet {
     surface.setLocation(displayWidth / 2 - width_ / 2, displayHeight / 2 - height_ / 2);
 
     if (enablebg) {
-      bg = getBackgroundForExceptionWindow(0, width_, height_);
+      bg = getBackgroundForExceptionWindow(width_, height_);
     }
   }
 
@@ -74,4 +74,6 @@ void exceptioneasy(String message, boolean bg) {
   exceptionmulti("Exception has been occured", message, bg);
 }
 
-String string
+String constructMessage(String classname, String error) {
+  return "Class: " + classname + "\n Error:" + error;
+}

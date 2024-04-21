@@ -1,4 +1,4 @@
-PImage getBackgroundForExceptionWindow(int gradient, int x, int y) {
+PImage getBackgroundForExceptionWindow(int x, int y) {
   PGraphics g = createGraphics(x, y);
   g.beginDraw();
 
