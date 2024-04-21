@@ -1,9 +1,16 @@
 PImage getBackgroundForExceptionWindow(int x, int y) {
   PGraphics g = createGraphics(x, y);
   g.beginDraw();
+  
+  if (BackgroundGeneratorSettings == null) {
+    g.fill(0);
+    g.stroke(0);
+    g.rect(0, 0, x, y);
+    return g;
+  }
 
-  int c1 = getSmartRandomColor(50, 100);
-  int c2 = getSmartRandomColor(50, 100);
+  int c1 = getSmartRandomColor(20, 70);
+  int c2 = getSmartRandomColor(20, 70);
 
 
   for (int ix = 0; ix < x; ix++) {
@@ -26,7 +33,7 @@ PImage getBackgroundForExceptionWindow(int x, int y) {
 }
 
 void grid_romb(PGraphics g, int x, int y) {
-  float startfrom = -y;
+  float startfrom = -y + -x;
   float endto = x;
   float step = BackgroundGeneratorSettings.getJSONObject("grid_romb").getFloat("step");
 

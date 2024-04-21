@@ -13,6 +13,9 @@ class Button extends Component {
     sizex = textWidth;
     sizey = textHeight;
   }
+  
+  @Override
+  void draw() { }
 }
 
 abstract class Component {

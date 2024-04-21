@@ -1,18 +1,16 @@
 class Level {
-  ArrayList<ParticleSystem> particles;
-  ArrayList<Line> lines;
+  ParticleSystem particle;
+  Line line;
   
   Level () {
-    particles = new ArrayList<>();
-    lines = new ArrayList<>();
+    particle = new ParticleSystem(2, 50);
+    line = new Line();
   }
   
   void draw() {
-    for (ParticleSystem particlesys : particles) {
-      particlesys.draw();
-    }
-    for (Line line : lines) {
-      line.draw();
-    }
+    strokeWeight(0);
+    particle.draw();
+    strokeWeight(LinesSettings.getFloat("strokeweight"));
+    line.draw();
   }
 }

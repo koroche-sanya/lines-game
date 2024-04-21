@@ -14,7 +14,11 @@ class ExceptionWindow extends PApplet {
 
   void setup() {
     size(100, 100);
-    fontSize = ExceptionWindowSettings.getJSONObject("messageText").getInt("fontSize");
+    if (ExceptionWindowSettings != null) {
+      fontSize = ExceptionWindowSettings.getJSONObject("messageText").getInt("fontSize");
+    } else {
+      fontSize = 16;
+    }
     PFont font = exceptionWindowFont;
     textFont(font);
     textSize(fontSize);
