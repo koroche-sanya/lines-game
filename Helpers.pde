@@ -1,7 +1,9 @@
+// Time
 float getTime() {
   return millis()/1000.;
 }
 
+// Colors
 int getRandomColor() {
   return color(random(255), random(255), random(255));
 }
@@ -20,16 +22,52 @@ int getSmartRandomColor(int min, int max) {
   return c;
 }
 
+int addAlpha(int col, int alpha) {
+  return color(red(col), green(col), blue(col), alpha);
+}
+
 int grayscale(color in) {
   return (int)(red(in) + green(in) + blue(in)) / 3;
 }
+
+// Random
 
 float randomNegative(float a) {
   return random(-a, a);
 }
 
+// GLWindow
+
+GLWindow getGLWindow(PSurface surface) {
+  return (GLWindow)surface.getNative();
+}
+
+// String
+
+String addlines(String input, int charsperline) {
+  StringBuilder out = new StringBuilder();
+  int counter = 0;
+  
+  for (int i = 0; i < input.length(); i++) {
+    out = out.append(input.charAt(i));
+    counter++;
+    if (counter > charsperline && input.charAt(i)==' ') {
+      counter = 0;
+      out = out.append("\n");
+    }
+  }
+  
+  return out.toString();
+}
+
+////
+
+boolean charEquals(char a, char b) {
+  return String.valueOf(a).equalsIgnoreCase(String.valueOf(b));
+}
+
 void stop_task() {
-  for(;;) {
+  for (;; ) {
     delay(100000);
   }
 }

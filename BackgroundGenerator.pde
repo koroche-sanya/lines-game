@@ -1,7 +1,7 @@
 PImage getBackgroundForExceptionWindow(int x, int y) {
   PGraphics g = createGraphics(x, y);
   g.beginDraw();
-  
+
   if (BackgroundGeneratorSettings == null) {
     g.fill(0);
     g.stroke(0);
@@ -15,8 +15,8 @@ PImage getBackgroundForExceptionWindow(int x, int y) {
 
   for (int ix = 0; ix < x; ix++) {
     for (int iy = 0; iy < y; iy++) {
-      float sx = sin(ix / (float)x * 1);
-      float sy = sin(iy / (float)y * 1);
+      float sx = ix / (float)x;
+      float sy = iy / (float)y;
       float lerp = (sx + sy) / 2;
 
       color c = lerpColor(c1, c2, lerp);

@@ -1,5 +1,8 @@
 {
-	"shape": "rect",
+	"shape": "ellipse",
 	"lifetime": 1.0,
 	"size": 50,
+	"alpha": 200,
+	
+	"spawncount": 3
 }
