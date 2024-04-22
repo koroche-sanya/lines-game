@@ -42,6 +42,14 @@ GLWindow getGLWindow(PSurface surface) {
   return (GLWindow)surface.getNative();
 }
 
+// JFrame
+
+JFrame getJFrame(PSurface surface) {
+  PSurfaceAWT.SmoothCanvas canvas = (PSurfaceAWT.SmoothCanvas)surface.getNative();
+  JFrame frame = (JFrame)canvas.getFrame();
+  return frame;
+}
+
 // String
 
 String addlines(String input, int charsperline) {

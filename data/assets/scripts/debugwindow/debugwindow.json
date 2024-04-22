@@ -1,0 +1,8 @@
+{
+	"fontsize": 16,
+	"show": {
+		"memory": true,
+		"particlescount": true,
+		"linescount": true
+	}
+}

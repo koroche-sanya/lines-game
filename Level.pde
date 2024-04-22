@@ -3,7 +3,7 @@ class Level {
   Line line;
 
   Level () {
-    particle = new ParticleSystem(2, 50);
+    particle = new ParticleSystem(ParticleSettings.getFloat("lifetime"), ParticleSettings.getFloat("size"));
     line = new Line();
   }
 

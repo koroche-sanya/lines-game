@@ -18,7 +18,7 @@ class ExceptionWindow extends PApplet {
     } else {
       fontSize = 16;
     }
-    PFont font = exceptionWindowFont;
+    PFont font = SpaceMonoFont;
     textFont(font);
     textSize(fontSize);
 
