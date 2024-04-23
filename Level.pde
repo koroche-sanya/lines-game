@@ -1,10 +1,12 @@
 class Level {
   ParticleSystem particle;
   Line line;
+  Target target;
 
   Level () {
     particle = new ParticleSystem(ParticleSettings.getFloat("lifetime"), ParticleSettings.getFloat("size"));
     line = new Line();
+    target = new Target();
   }
 
   void draw() {
@@ -13,6 +15,25 @@ class Level {
       line.draw();
     }
     strokeWeight(0);
+    if (TargetSettings.getBoolean("enable")) {
+      if (target != null) {
+        target.draw();
+        if (target.isOut()) {
+          target.killed = true;
+          if (!scoreflag) {
+            score++;
+            scoreflag = true;
+          }
+        }
+        if (target.isFullyOut()) {
+          target = new Target();
+          if (scoreflag) {
+            scoreflag = false;
+          }
+        }
+      }
+    }
+    noStroke();
     particle.draw();
     if (toplayerline) {
       line.draw();

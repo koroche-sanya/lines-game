@@ -4,8 +4,11 @@ Level level;
 
 boolean debug = false;
 
-vec2 mouse;
-vec2 pmouse;
+int mousex, mousey;
+int pmousex = -1, pmousey = -1;
+
+int score = 0;
+boolean scoreflag = false;
 
 void settings() {
   size(500, 500, P2D);
@@ -24,6 +27,9 @@ void setup() {
 
     level = new Level();
 
+    textMode(SHAPE);
+    rectMode(CENTER);
+
     if (debug) {
       DebugWindow debugwin = new DebugWindow();
       parent.runSketch(new String[]{""}, debugwin);
@@ -37,26 +43,60 @@ void setup() {
 void draw() {
   try {
     background(255);
-    vec2 tmouse = new vec2(mouseX, mouseY);
-    if (pmouse == null) {
-      pmouse = tmouse;
-    } else {
-      pmouse = mouse;
-    }
-    mouse = tmouse;
-    mouse.x = int(mouseX + LineControlSettings.getJSONObject("offset").getFloat("x"));
-    mouse.y = int(mouseY + LineControlSettings.getJSONObject("offset").getFloat("y"));
+    pmousex = (pmousex == -1 ? mouseX : mousex);
+    pmousey = mousey;
+    mousex = (int)(mouseX + LineControlSettings.getJSONObject("offset").getFloat("x"));
+    mousey = (int)(mouseY + LineControlSettings.getJSONObject("offset").getFloat("y"));
     if (mousePressed) {
 
-      LinePart linepart = new LinePart(pmouse, mouse);
+      LinePart linepart = new LinePart(pmousex, pmousey, mousex, mousey);
       level.line.add(linepart);
-      level.particle.pos = mouse.copy();
-      vec2 accel = vec2.sub(mouse, pmouse);
-      accel.mult(new vec2(LineControlSettings.getFloat("acceleration")));
+      level.particle.x = mousex;
+      level.particle.y = mousey;
+      float accelX = mousex - pmousex;
+      float accelY = mousey - pmousey;
+      accelX *= LineControlSettings.getFloat("acceleration");
+      accelY *= LineControlSettings.getFloat("acceleration");
       for (int i = 0; i < ParticleSettings.getInt("spawncount"); i++)
-        level.particle.spawn(accel.x, accel.y);
+        level.particle.spawn(accelX, accelY);
     }
     level.draw();
+
+    if (TargetSettings.getBoolean("enable")) {
+      JSONArray colarr = ScoreSettings.getJSONObject("rect").getJSONArray("color");
+      int[] col = new int[4];
+
+      if (colarr.size() != 4) {
+        exception("Exception has been occured", "Class: Main.<func>draw\n Error: Field \"color\" in \"rect\" in \"score.json\" doesn't match size.\n      Required: size 4 (r, g, b, a)");
+      }
+
+      for (int i = 0; i < colarr.size(); i++) {
+        col[i] = colarr.getInt(i);
+      }
+      
+      int yoffset = ScoreSettings.getInt("yoffset");
+      
+      textFont(SpaceMonoFont);
+      textSize(ScoreSettings.getInt("fontSize"));
+      textAlign(CENTER, CENTER);
+      noStroke();
+      fill(col[0], col[1], col[2], col[3]);
+      rect(width /2, yoffset, textWidth(String.valueOf(score)) + 30, textAscent() + textDescent() + 5, 5);
+      
+      colarr = ScoreSettings.getJSONObject("text").getJSONArray("color");
+      col = new int[3];
+
+      if (colarr.size() != 3) {
+        exception("Exception has been occured", "Class: Main.<func>draw\n Error: Field \"color\" in \"text\" in \"score.json\" doesn't match size.\n      Required: size 3 (r, g, b)");
+      }
+
+      for (int i = 0; i < colarr.size(); i++) {
+        col[i] = colarr.getInt(i);
+      }
+      
+      fill(col[0], col[1], col[2]);
+      text(score, width / 2, yoffset);
+    }
   }
   catch (Exception e) {
     exception("Exception has been occured", "Class: Main.<func>draw\n Error: " + addlines(e.getMessage(), 50));

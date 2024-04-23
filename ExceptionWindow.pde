@@ -10,6 +10,7 @@ class ExceptionWindow extends PApplet {
     this.message = message;
     parent.runSketch(new String[]{""}, this);
     enablebg = bg;
+    getSurface().setAlwaysOnTop(true);
   }
 
   void setup() {
@@ -50,7 +51,12 @@ class ExceptionWindow extends PApplet {
   }
 
   void exit() {
-    parent.getSurface().stopThread();
+    boolean ok = parent.getSurface().stopThread();
+    delay(50);
+    while (!ok) {
+      ok = parent.getSurface().stopThread();
+      delay(50);
+    }
     parent.exit();
     super.exit();
   }

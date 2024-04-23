@@ -1,17 +1,18 @@
 class Particle {
-  vec2 pos;
-  float s;
+  float x, y, s;
   float maxSize;
   float lifetime;
   float startTime;
-  vec2 speed;
+  float speedX, speedY;
   int   particleColor;
   Shape shape;
 
-  Particle (vec2 pos, float maxSize, float lifetime, vec2 acceleration, int col, Shape shape) {
-    this.pos = pos;
+  Particle (float x, float y, float maxSize, float lifetime, float accelerationX, float accelerationY, int col, Shape shape) {
+    this.x = x;
+    this.y = y;
     this.maxSize = maxSize;
-    this.speed = acceleration;
+    this.speedX = accelerationX;
+    this.speedY = accelerationY;
 
     this.lifetime = lifetime;
     this.startTime = getTime();
@@ -25,15 +26,16 @@ class Particle {
   }
 
   void update() {
-    pos.add(speed);
+    x += speedX;
+    y += speedY;
     s = map(getTime() - startTime, lifetime, 0, 0, maxSize);
   }
 
   void draw() {
-    shape.draw(pos.x, pos.y, s, particleColor);
+    shape.draw(x, y, s, particleColor);
   }
 
   boolean isOut() {
-    return s < 0;
+    return s <= 0.1;
   }
 }

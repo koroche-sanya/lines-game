@@ -1,0 +1,17 @@
+{
+	"enable": true,
+	"particles": {
+		"lifetime": 3.0,
+		"size": 20.0,
+		"random": 50
+	},
+	"point": {
+		"sizenormal": 50,
+		"sizekillset": 100,
+		"sizekillrequired": 500
+	},
+	"interpolate": {
+		"speed": 0.01,
+		"size": 0.1
+	}
+}

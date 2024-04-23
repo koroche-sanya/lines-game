@@ -1,8 +1,13 @@
 {
 	"shape": "ellipse",
 	"lifetime": 1.0,
+	
 	"size": 50,
 	"alpha": 200,
 	
-	"spawncount": 3
+	"spawncount": 3,
+	"randomspawn": {
+		"x": 2,
+		"y": 2
+	}
 }

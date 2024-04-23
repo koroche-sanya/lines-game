@@ -2,9 +2,14 @@ class DebugWindow extends PApplet {
   void setup() {
     surface.setSize(300, 200);
     surface.setTitle("Debug");
+    surface.setIcon(debuglogo);
   }
 
   void draw() {
+    GLWindow glw = getGLWindow(parent.getSurface());
+    int tarx = glw.getLocationOnScreen(new Point(0, 0)).getX() + parent.width;
+    int tary = glw.getLocationOnScreen(new Point(0, 0)).getY();
+    surface.setLocation(tarx, tary);
     background(0);
     grid_romb(g, width, height);
     PFont font = SpaceMonoFont;

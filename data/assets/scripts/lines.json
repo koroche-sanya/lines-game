@@ -1,7 +1,7 @@
 {
 	"lifetime": 1.0,
-	"strokeweight": 10.0,
+	"strokeweight": 20.0,
 	"strokecolor": [0, 0, 0],
 	
-	"toplayer": true
+	"toplayer": false
 }
