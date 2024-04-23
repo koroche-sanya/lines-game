@@ -4,8 +4,8 @@ Level level;
 
 boolean debug = false;
 
-int mx, my;
-int pmx = -1, pmy = -1;
+vec2 mouse;
+vec2 pmouse;
 
 void settings() {
   size(500, 500, P2D);
@@ -23,7 +23,7 @@ void setup() {
     debug = GeneralSettings.getBoolean("debug");
 
     level = new Level();
-    
+
     if (debug) {
       DebugWindow debugwin = new DebugWindow();
       parent.runSketch(new String[]{""}, debugwin);
@@ -37,22 +37,24 @@ void setup() {
 void draw() {
   try {
     background(255);
+    vec2 tmouse = new vec2(mouseX, mouseY);
+    if (pmouse == null) {
+      pmouse = tmouse;
+    } else {
+      pmouse = mouse;
+    }
+    mouse = tmouse;
+    mouse.x = int(mouseX + LineControlSettings.getJSONObject("offset").getFloat("x"));
+    mouse.y = int(mouseY + LineControlSettings.getJSONObject("offset").getFloat("y"));
     if (mousePressed) {
-      pmx = (pmx == -1 ? mouseX : mx);
-      pmy = my;
-      mx = mouseX + LineControlSettings.getJSONObject("offset").getFloat("x");
-      my = mouseY + LineControlSettings.getJSONObject("offset").getFloat("y");
-      
-      LinePart linepart = new LinePart(pmx, pmy, mx, my);
+
+      LinePart linepart = new LinePart(pmouse, mouse);
       level.line.add(linepart);
-      level.particle.x = mx;
-      level.particle.y = my;
-      float accelX = mx - pmx;
-      float accelY = my - pmy;
-      accelX *= LineControlSettings.getFloat("acceleration");
-      accelY *= LineControlSettings.getFloat("acceleration");
+      level.particle.pos = mouse.copy();
+      vec2 accel = vec2.sub(mouse, pmouse);
+      accel.mult(new vec2(LineControlSettings.getFloat("acceleration")));
       for (int i = 0; i < ParticleSettings.getInt("spawncount"); i++)
-        level.particle.spawn(accelX, accelY);
+        level.particle.spawn(accel.x, accel.y);
     }
     level.draw();
   }

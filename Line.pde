@@ -21,13 +21,12 @@ class Line {
 }
 
 class LinePart {
-  float x1, y1, x2, y2, lifetime, starttime, weight;
+  float lifetime, starttime, weight;
+  vec2 start, end;
 
-  LinePart(float x1, float y1, float x2, float y2) {
-    this.x1 = x1;
-    this.y1 = y1;
-    this.x2 = x2;
-    this.y2 = y2;
+  LinePart(vec2 start, vec2 end) {
+    this.start = start;
+    this.end = end;
     this.starttime = getTime();
     this.lifetime = LinesSettings.getFloat("lifetime");
     this.weight = LinesSettings.getFloat("strokeweight");
@@ -47,7 +46,7 @@ class LinePart {
     }
     strokeWeight(max(0, weight));
     stroke(col[0], col[1], col[2]);
-    line(x1, y1, x2, y2);
+    line(start.x, start.y, end.x, end.y);
   }
 
   boolean isOut() {

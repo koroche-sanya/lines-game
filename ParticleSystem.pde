@@ -1,5 +1,5 @@
 class ParticleSystem {
-  float x, y;
+  vec2 pos;
   float lifetime = 5;
   float size = 50;
   ArrayList<Particle> particles;
@@ -26,7 +26,7 @@ class ParticleSystem {
     default:
       exception("Exception has been occured", "Class: ParticleSystem\n Error: Unknown shape founded in the \"particles.json\"");
     }
-    particles.add(new Particle(x, y, size, lifetime, accelerationX + randomNegative(2), accelerationY + randomNegative(2), addAlpha(getRandomColor(), ParticleSettings.getInt("alpha")), shape));
+    particles.add(new Particle(pos, size, lifetime, new vec2(accelerationX + randomNegative(2), accelerationY + randomNegative(2)), addAlpha(getRandomColor(), ParticleSettings.getInt("alpha")), shape));
   }
 
   void draw() {
