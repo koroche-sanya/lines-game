@@ -10,6 +10,8 @@ int pmousex = -1, pmousey = -1;
 int score = 0;
 boolean scoreflag = false;
 
+float mouseStoppedTime = -1;
+
 void settings() {
   size(500, 500, P2D);
   PJOGL.setIcon("assets\\logo\\logo.png");
@@ -73,16 +75,16 @@ void draw() {
       for (int i = 0; i < colarr.size(); i++) {
         col[i] = colarr.getInt(i);
       }
-      
+
       int yoffset = ScoreSettings.getInt("yoffset");
-      
+
       textFont(SpaceMonoFont);
       textSize(ScoreSettings.getInt("fontSize"));
       textAlign(CENTER, CENTER);
       noStroke();
       fill(col[0], col[1], col[2], col[3]);
       rect(width /2, yoffset, textWidth(String.valueOf(score)) + 30, textAscent() + textDescent() + 5, 5);
-      
+
       colarr = ScoreSettings.getJSONObject("text").getJSONArray("color");
       col = new int[3];
 
@@ -93,7 +95,7 @@ void draw() {
       for (int i = 0; i < colarr.size(); i++) {
         col[i] = colarr.getInt(i);
       }
-      
+
       fill(col[0], col[1], col[2]);
       text(score, width / 2, yoffset);
     }
@@ -101,4 +103,19 @@ void draw() {
   catch (Exception e) {
     exception("Exception has been occured", "Class: Main.<func>draw\n Error: " + addlines(e.getMessage(), 50));
   }
+}
+
+void mouseDragged() {
+  drawingSound.play();
+}
+
+void mouseReleased() {
+  drawingSound.pause();
+}
+
+void exit() {
+  drawingSound.close();
+  explosionSound.close();
+  getSurface().stopThread();
+  super.exit();
 }

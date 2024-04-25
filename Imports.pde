@@ -4,3 +4,4 @@ import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 
 import processing.awt.PSurfaceAWT;
+import ddf.minim.*;

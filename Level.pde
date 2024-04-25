@@ -23,6 +23,8 @@ class Level {
           if (!scoreflag) {
             score++;
             scoreflag = true;
+            explosionSound.rewind();
+            explosionSound.play();
           }
         }
         if (target.isFullyOut()) {

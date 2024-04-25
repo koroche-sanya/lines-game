@@ -13,6 +13,11 @@ JSONObject LinesSettings;
 JSONObject TargetSettings;
 JSONObject ScoreSettings;
 
+Minim minim;
+AudioPlayer drawingSound;
+AudioPlayer explosionSound;
+AudioPlayer respawnSound;
+
 void loadAll() {
   boolean loadingsettings = false;
   try {
@@ -31,6 +36,10 @@ void loadAll() {
     ExceptionWindowSettings = loadJSONObject("assets\\scripts\\exceptionwindow\\exceptionwindow.json");
     DebugWindowSettings = loadJSONObject("assets\\scripts\\debugwindow\\debugwindow.json");
     BackgroundGeneratorSettings = loadJSONObject("assets\\scripts\\exceptionwindow\\background.json");
+
+    minim = new Minim(this);
+    explosionSound = minim.loadFile("assets\\sound\\explosion.mp3");
+    drawingSound = minim.loadFile("assets\\sound\\drawing.mp3");
   }
   catch (Exception e) {
     exceptionmulti("Exception has been occured", "Class: Main.<func>loadAll\n Error: " + addlines(e.getMessage(), 30), loadingsettings);
